@@ -26,9 +26,20 @@ function increaseCounter() {
     counter++;
     updateCounter();
     playSound(COUNTER_TYPES.INCREASE);
+    
+    // Check if we just reached the max limit after incrementing
+    if (counter === maxLimit) {
+      playSound(COUNTER_TYPES.ERROR, function() {
+        if (confirm('Maximum limit reached! Would you like to reset the counter?')) {
+          resetCounter();
+        }
+      });
+    }
   } else {
-    playSound(COUNTER_TYPES.ERROR, function () {
-      alert('Counter reached the maximum limit!');
+    playSound(COUNTER_TYPES.ERROR, function() {
+      if (confirm('Maximum limit reached! Would you like to reset the counter?')) {
+        resetCounter();
+      }
     });
   }
 }
@@ -40,7 +51,7 @@ function decreaseCounter() {
     updateCounter();
     playSound(COUNTER_TYPES.DECREASE);
   } else {
-    playSound(COUNTER_TYPES.ERROR, function () {
+    playSound(COUNTER_TYPES.ERROR, function() {
       alert('Counter reached the minimum limit!');
     });
   }
@@ -54,7 +65,7 @@ function resetCounter() {
 
 function playSound(type, callback) {
   const audio = new Audio(SOUND_MAP[type]);
-  audio.onended = function () {
+  audio.onended = function() {
     if (callback && typeof callback === 'function') {
       callback();
     }
@@ -62,15 +73,13 @@ function playSound(type, callback) {
   audio.play();
 }
 
-// Theme toggle functionality
+// Theme toggle functionality remains the same...
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 
-// Check for saved theme preference or use preferred color scheme
 const savedTheme = localStorage.getItem('theme') || 
                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
-// Apply the saved theme
 if (savedTheme === 'dark') {
     body.classList.add('dark-mode');
     themeToggle.textContent = '☀️';
@@ -79,14 +88,11 @@ if (savedTheme === 'dark') {
     themeToggle.textContent = '🌙';
 }
 
-// Toggle theme function
 themeToggle.addEventListener('click', () => {
     body.classList.toggle('dark-mode');
     const isDark = body.classList.contains('dark-mode');
     
     themeToggle.textContent = isDark ? '☀️' : '🌙';
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    
-    // Play a sound when toggling theme
     playSound(isDark ? COUNTER_TYPES.INCREASE : COUNTER_TYPES.DECREASE);
 });
