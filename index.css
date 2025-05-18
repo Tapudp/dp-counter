@@ -64,3 +64,73 @@ button:hover {
     align-items: flex-start;
     gap: 1rem;
 }
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #f4f4f4;
+}
+
+body.dark-mode h1 {
+    color: #f4f4f4;
+}
+
+body.dark-mode #counter {
+    color: #f4f4f4;
+}
+
+body.dark-mode label {
+    color: #ccc;
+}
+
+body.dark-mode input {
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    font-size: 1.2em;
+    background-color: transparent;
+    border: 1px solid #EB87C7;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+body.dark-mode .theme-toggle {
+    border-color: #f4f4f4;
+    color: #f4f4f4;
+}
+
+/* Adjust button colors for dark mode */
+body.dark-mode button:not(.theme-toggle) {
+    background-color: #9C27B0;
+}
+
+body.dark-mode button:not(.theme-toggle):hover {
+    background-color: #7B1FA2;
+}
+
+button:not(.theme-toggle) {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    background-color: #EB87C7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:not(.theme-toggle):hover {
+    background-color: #0056b3;
+}

@@ -61,3 +61,32 @@ function playSound(type, callback) {
   };
   audio.play();
 }
+
+// Theme toggle functionality
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+
+// Check for saved theme preference or use preferred color scheme
+const savedTheme = localStorage.getItem('theme') || 
+                   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+// Apply the saved theme
+if (savedTheme === 'dark') {
+    body.classList.add('dark-mode');
+    themeToggle.textContent = '☀️';
+} else {
+    body.classList.remove('dark-mode');
+    themeToggle.textContent = '🌙';
+}
+
+// Toggle theme function
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    const isDark = body.classList.contains('dark-mode');
+    
+    themeToggle.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    
+    // Play a sound when toggling theme
+    playSound(isDark ? COUNTER_TYPES.INCREASE : COUNTER_TYPES.DECREASE);
+});
